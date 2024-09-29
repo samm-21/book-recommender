@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book['Book-Title'] }}</title>
+</head>
+<body>
+    <h1>{{ book['Book-Title'] }}</h1>
+    <p>Author: {{ book['Book-Author'] }}</p>
+    <p>Published: {{ book['Year-Of-Publication'] }}</p>
+    <img src="{{ book['Image-URL-L'] }}" alt="Book Cover" />
+
+    <h2>Description:</h2>
+    <p>{{ book_description }}</p>
+
+    <h2>Author Information</h2>
+    <p>{{ author_info }}</p>
+
+    <h2>Other Popular Books by {{ book['Book-Author'] }}</h2>
+    <ul>
+        {% for other_book in other_books %}
+            <li>{{ other_book['Book-Title'] }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Goodreads Reviews</h2>
+    <ul>
+        {% if reviews %}
+            {% for review in reviews %}
+                <li>
+                    <strong>{{ review.title }}</strong>: {{ review.content }}
+                    <a href="{{ review.link }}">Read more</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No reviews found.</li>
+        {% endif %}
+    </ul>
+    <a href="https://www.amazon.com/dp/{{ book['ISBN'] }}">Buy on Amazon</a>
+</body>
+</html>
