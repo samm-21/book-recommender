@@ -42,19 +42,22 @@
         {% endif %}
 
             {% if data %}
-                <div class="card-container">
-                    {% for i in data %}
-                        <div class="card">
-                            <div class="card-body">
-                                <img class="card-img-top" src="{{ i[2] }}">
-                                <b style="font-size: large; margin: 0px 0.25px"><li>{{ i[0] }}</li></b>
-                                <li style="color: darkslategray">{{ i[1] }}</li>
-    {#                            <li style="color: darkslategray">Votes - {{ i[3] }}</li>#}
-    {#                            <li style="color: darkslategray">Rating - {{ i[4] | round }}</li>#}
-                            </div>
+            <div class="card-container">
+                {% for i in data %}
+                <a href="/book/{{ i[3] }}">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ i[2] }}" alt="book image">
+                            <b style="font-size: large; margin: 0px 0.25px">
+                                <li>{{ i[0] }}</li>
+                            </b>
+                            <li style="color: darkslategray">{{ i[1] }}</li>
+                            
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
             {% endif %}
         </div>
 </body>
