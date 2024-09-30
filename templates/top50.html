@@ -56,66 +56,45 @@
 
     <div class="container">
         <!-- <div class="row"> -->
-            <div class="col-md-6">
-                <b>
-                    <h1 style="margin: 1rem; color: white;">Top 50 Books</h1>
-                </b>
-            </div>
+        <div class="col-md-12">
+            <b>
+                <h1 style="margin: 1rem; color: white;">Top 50 Books</h1>
+            </b>
+        </div>
 
-            <div class="card-container">
-                {% for i in range(book_name|length) %}
+        <div class="card-container">
+            {% for book in books %}
                 <div class="col-md-3">
-                    <a href="{{ url_for('book_detail', isbn=books[i]['ISBN']) }}">
+                    <a href="{{ url_for('book_detail', isbn=book['ISBN']) }}">
                         <div id="card" class="card">
                             <div class="card-body">
-                                <img class="card-img-top" src="{{ image[i] }}">
+                                <img class="card-img-top" src="{{ book['Image-URL-M'] }}">
                                 <b style="font-size: large; margin: 0px 0.25px">
-                                    <li>{{ books[i]['Book-Title'] }}</li>
+                                    <li>{{ book['Book-Title'] }}</li>
                                 </b>
-                                <li style="color: darkslategray">{{ books[i]['Book-Author'] }}</li>
-                                <li style="color: darkslategray">Votes - {{ votes[i] }}</li>
-                                <li style="color: darkslategray">Rating - {{ rating[i] | round }}</li>
-                                <p>ISBN: {{ books[i]['ISBN'] }}</p>
+                                <li style="color: darkslategray">{{ book['Book-Author'] }}</li>
+                                <li style="color: darkslategray">Votes - {{ book['num-ratings'] }}</li>
+                                <li style="color: darkslategray">Rating - {{ book['avg_rating'] | round }}</li>
+                                <!-- <p>ISBN: {{ book['ISBN'] }}</p> -->
                             </div>
                         </div>
                     </a>
                 </div>
-                {% endfor %}
-            </div>
-            
-            
-
-        <!-- </div> -->
+            {% endfor %}
+        </div>
     </div>
 
 </body>
+<script>
+    const cards = document.querySelectorAll("#card");
+    function redirectToBook(isbn) {
+        window.location.href = '/book/' + isbn;
+    }
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            console.log("clicked");
+        })
+    });
+</script>
 
 </html>
-
-
-
-<!-- @app.route('/book/<string:isbn>', methods=['GET'])
-def book_detail(isbn): -->
-<!-- print(f"Requested ISBN: {isbn}")  # Debugging line
-    book = next((b for b in books if b['ISBN'] == isbn), None)
-
-    if book:
-        print(f"Found Book: {book}")  # Debugging line
-        book_description = get_wikipedia_summary(book['Book-Title'])
-        author_info = get_author_info(book['Book-Author'])
-        other_books = get_other_books_by_author(book['Book-Author'])
-
-        popular_df = [b for b in books if b['Book-Author'] == book['Book-Author']]
-        book_name = list(b['Book-Title'] for b in popular_df)
-        author = list(b['Book-Author'] for b in popular_df)
-        image = list(b['Image-URL-M'] for b in popular_df)
-        votes = list(b.get('num-ratings', 0) for b in popular_df) 
-        rating = list(b.get('avg_rating', 0) for b in popular_df)
-
-        return render_template('book_detail.html', book=book, book_description=book_description,
-                                author_info=author_info, other_books=other_books, book_name=book_name,
-                                author_list=author, image=image, votes=votes, rating=rating)
-     -->
-<!-- else:
-        print(f"Book not found for ISBN: {isbn}")
-        return "Book not found", 404 -->
